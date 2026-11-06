@@ -3,79 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Admin Portal</title>
+    <title>Advanced Admin Control Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-950 text-slate-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 sm:p-8">
 
-    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
-        <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-800">
-            <div class="w-10 h-10 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center text-xl font-bold">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
+    <div class="max-w-5xl mx-auto">
+        <!-- Top Bar -->
+        <div class="flex flex-wrap justify-between items-center bg-slate-900 border border-slate-800 p-6 rounded-3xl mb-8 shadow-xl gap-4">
             <div>
-                <h1 class="text-lg font-bold">Admin Control Hub</h1>
-                <p class="text-xs text-slate-400">GitHub REST API Integration</p>
+                <h1 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-400"></i> Advanced Admin Control Panel
+                </h1>
+                <p class="text-xs text-slate-400">Manage your entire website content in real-time</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="saveToGitHub()" id="save-btn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Save All to GitHub
+                </button>
             </div>
         </div>
 
-        <form id="admin-form" onsubmit="handleUpdate(event)" class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">GITHUB REPO OWNER</label>
-                <input type="text" id="owner" required placeholder="e.g. mr-na-09" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-sky-500 font-mono">
+        <!-- GitHub Config Box -->
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl mb-8">
+            <h2 class="text-sm font-bold text-amber-400 mb-4 uppercase tracking-wider">GitHub API Authentication</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Owner</label>
+                    <input type="text" id="repo-owner" placeholder="mr-na-09" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Repository Name</label>
+                    <input type="text" id="repo-name" placeholder="dube-xerox-dharni" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Personal Access Token (PAT)</label>
+                    <input type="password" id="repo-token" placeholder="github_pat_..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm font-mono">
+                </div>
             </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">REPOSITORY NAME</label>
-                <input type="text" id="repo" required placeholder="e.g. xerox-shop" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-sky-500 font-mono">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">PERSONAL ACCESS TOKEN (PAT)</label>
-                <input type="password" id="token" required placeholder="ghp_XXXXXXXXXXXXXXXXXXXX" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-sky-500">
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">SHOP STATUS</label>
-                <select id="status" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-sky-500">
-                    <option value="Open">Open Now</option>
-                    <option value="Closed">Closed</option>
-                </select>
-            </div>
-
-            <button type="submit" id="btn" class="w-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold py-3.5 rounded-2xl transition text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Sync & Push to GitHub
+            <button onclick="loadFromGitHub()" class="mt-4 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                <i class="fa-solid fa-rotate mr-1"></i> Load Existing Data from GitHub
             </button>
-        </form>
+        </div>
 
-        <div id="msg" class="mt-4 text-xs text-center hidden font-medium"></div>
+        <!-- Tabs Navigation -->
+        <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-800 pb-4">
+            <button onclick="switchTab('general')" class="tab-btn bg-amber-500 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition" data-target="general">General & Contact</button>
+            <button onclick="switchTab('services')" class="tab-btn bg-slate-900 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm transition hover:bg-slate-800" data-target="services">Services Manager</button>
+            <button onclick="switchTab('notices')" class="tab-btn bg-slate-900 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm transition hover:bg-slate-800" data-target="notices">Notices</button>
+            <button onclick="switchTab('gallery')" class="tab-btn bg-slate-900 text-slate-300 font-bold px-5 py-2.5 rounded-xl text-sm transition hover:bg-slate-800" data-target="gallery">Photo Gallery</button>
+        </div>
+
+        <!-- Tab 1: General Info -->
+        <div id="tab-general" class="tab-content space-y-6 bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+            <h2 class="text-lg font-bold text-white mb-4">General Website Settings</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Shop Name</label>
+                    <input type="text" id="inp-shopname" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Tagline</label>
+                    <input type="text" id="inp-tagline" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Hero Title (Main Heading)</label>
+                    <input type="text" id="inp-herotitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Hero Description</label>
+                    <textarea id="inp-herodesc" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">WhatsApp Number (with country code, e.g. 919876543210)</label>
+                    <input type="text" id="inp-whatsapp" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Phone Number</label>
+                    <input type="text" id="inp-phone" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Shop Timing</label>
+                    <input type="text" id="inp-timing" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Address</label>
+                    <input type="text" id="inp-address" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Services Manager -->
+        <div id="tab-services" class="tab-content space-y-6 bg-slate-900 border border-slate-800 p-8 rounded-3xl hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-white">Manage Services</h2>
+                <button onclick="addServiceItem()" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i> Add Service
+                </button>
+            </div>
+            <div id="services-admin-list" class="space-y-4"></div>
+        </div>
+
+        <!-- Tab 3: Notices -->
+        <div id="tab-notices" class="tab-content space-y-6 bg-slate-900 border border-slate-800 p-8 rounded-3xl hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-white">Manage Notice Board</h2>
+                <button onclick="addNoticeItem()" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i> Add Notice
+                </button>
+            </div>
+            <div id="notices-admin-list" class="space-y-4"></div>
+        </div>
+
+        <!-- Tab 4: Gallery -->
+        <div id="tab-gallery" class="tab-content space-y-6 bg-slate-900 border border-slate-800 p-8 rounded-3xl hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-white">Manage Gallery Photos (Image URLs)</h2>
+                <button onclick="addGalleryItem()" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i> Add Image URL
+                </button>
+            </div>
+            <div id="gallery-admin-list" class="space-y-4"></div>
+        </div>
+
+        <div id="status-msg" class="mt-6 text-center text-sm font-semibold"></div>
     </div>
 
+    <!-- Script to handle full admin CRUD operations -->
     <script>
-        async function handleUpdate(e) {
-            e.preventDefault();
-            const owner = document.getElementById('owner').value.trim();
-            const repo = document.getElementById('repo').value.trim();
-            const token = document.getElementById('token').value.trim();
-            const status = document.getElementById('status').value;
-            const msg = document.getElementById('msg');
-            const btn = document.getElementById('btn');
+        let currentData = {
+            shop_name: "डिजिटल ज़ेरॉक्स सेंटर",
+            tagline: "Fast & Reliable Services",
+            hero_title: "सभी प्रकार के सरकारी दस्तावेज़ और प्रिंटिंग तुरंत पाएं",
+            hero_desc: "सातबारा, 8-अ, अर्जेंट पासपोर्ट फोटो, आधार कार्ड, और हाई-क्वालिटी कलर ज़ेरॉक्स बिना लाइन के।",
+            whatsapp: "919876543210",
+            phone: "+91 9876543210",
+            timing: "सोमवार - शनिवार: सुबह 8:00 - रात 8:30",
+            address: "मुख्य मार्ग, धारणी, महाराष्ट्र",
+            services: [
+                { title: "सातबारा (7/12) & 8-अ", desc: "डिजिटल हस्ताक्षर वाला अधिकृत 7/12 और 8-अ तुरंत प्राप्त करें।", badge: "गट/सर्वे नंबर अनिवार्य", icon: "fa-solid fa-file-invoice" },
+                { title: "अर्जेंट पासपोर्ट साइज़ फोटो", desc: "5 मिनट में स्टूडियो क्वालिटी पासपोर्ट फोटो और डिजिटल कॉपी पाएं।", badge: "इंस्टेंट प्रिंट", icon: "fa-solid fa-camera-retro" }
+            ],
+            notices: [
+                { title: "दुकान खुली है", desc: "आज सभी प्रकार की ऑनलाइन सेवाएं सुचारू रूप से चालू हैं।" }
+            ],
+            gallery: [
+                "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&w=800&q=80",
+                "https://images.unsplash.com/photo-1588600878108-578307a3cc9d?auto=format&fit=crop&w=800&q=80"
+            ]
+        };
 
-            msg.classList.remove('hidden', 'text-emerald-400', 'text-rose-400');
-            msg.innerText = "Connecting to GitHub API...";
-            btn.disabled = true;
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-950');
+                btn.classList.add('bg-slate-900', 'text-slate-300');
+                if(btn.dataset.target === tabName) {
+                    btn.classList.remove('bg-slate-900', 'text-slate-300');
+                    btn.classList.add('bg-amber-500', 'text-slate-950');
+                }
+            });
+        }
 
-            const path = "config.json";
+        function populateForm() {
+            document.getElementById('inp-shopname').value = currentData.shop_name || '';
+            document.getElementById('inp-tagline').value = currentData.tagline || '';
+            document.getElementById('inp-herotitle').value = currentData.hero_title || '';
+            document.getElementById('inp-herodesc').value = currentData.hero_desc || '';
+            document.getElementById('inp-whatsapp').value = currentData.whatsapp || '';
+            document.getElementById('inp-phone').value = currentData.phone || '';
+            document.getElementById('inp-timing').value = currentData.timing || '';
+            document.getElementById('inp-address').value = currentData.address || '';
+
+            renderServices();
+            renderNotices();
+            renderGallery();
+        }
+
+        function renderServices() {
+            let html = '';
+            (currentData.services || []).forEach((s, idx) => {
+                html += `
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex flex-col gap-3 relative">
+                    <button onclick="removeService(${idx})" class="absolute top-4 right-4 text-rose-400 hover:text-rose-300 text-sm"><i class="fa-solid fa-trash"></i></button>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <input type="text" value="${s.title}" oninput="currentData.services[${idx}].title=this.value" placeholder="Service Title" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">
+                        <input type="text" value="${s.badge}" oninput="currentData.services[${idx}].badge=this.value" placeholder="Badge" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">
+                        <input type="text" value="${s.icon}" oninput="currentData.services[${idx}].icon=this.value" placeholder="Icon class" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">
+                    </div>
+                    <textarea oninput="currentData.services[${idx}].desc=this.value" placeholder="Description" rows="2" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">${s.desc}</textarea>
+                </div>`;
+            });
+            document.getElementById('services-admin-list').innerHTML = html;
+        }
+
+        function addServiceItem() {
+            if(!currentData.services) currentData.services = [];
+            currentData.services.push({ title: "New Service", desc: "Description here", badge: "New", icon: "fa-solid fa-print" });
+            renderServices();
+        }
+        function removeService(idx) {
+            currentData.services.splice(idx, 1);
+            renderServices();
+        }
+
+        function renderNotices() {
+            let html = '';
+            (currentData.notices || []).forEach((n, idx) => {
+                html += `
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex flex-col gap-3 relative">
+                    <button onclick="removeNotice(${idx})" class="absolute top-4 right-4 text-rose-400 text-sm"><i class="fa-solid fa-trash"></i></button>
+                    <input type="text" value="${n.title}" oninput="currentData.notices[${idx}].title=this.value" placeholder="Notice Title" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">
+                    <textarea oninput="currentData.notices[${idx}].desc=this.value" placeholder="Notice Details" rows="2" class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">${n.desc}</textarea>
+                </div>`;
+            });
+            document.getElementById('notices-admin-list').innerHTML = html;
+        }
+
+        function addNoticeItem() {
+            if(!currentData.notices) currentData.notices = [];
+            currentData.notices.push({ title: "New Notice", desc: "Notice details here" });
+            renderNotices();
+        }
+        function removeNotice(idx) {
+            currentData.notices.splice(idx, 1);
+            renderNotices();
+        }
+
+        function renderGallery() {
+            let html = '';
+            (currentData.gallery || []).forEach((img, idx) => {
+                html += `
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center gap-3">
+                    <img src="${img}" class="w-16 h-16 object-cover rounded-xl border border-slate-800">
+                    <input type="text" value="${img}" oninput="currentData.gallery[${idx}]=this.value" placeholder="Image URL" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs">
+                    <button onclick="removeGallery(${idx})" class="text-rose-400 p-2"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+            });
+            document.getElementById('gallery-admin-list').innerHTML = html;
+        }
+
+        function addGalleryItem() {
+            if(!currentData.gallery) currentData.gallery = [];
+            currentData.gallery.push("https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&w=800&q=80");
+            renderGallery();
+        }
+        function removeGallery(idx) {
+            currentData.gallery.splice(idx, 1);
+            renderGallery();
+        }
+
+        async function loadFromGitHub() {
+            const owner = document.getElementById('repo-owner').value.trim();
+            const repo = document.getElementById('repo-name').value.trim();
+            const token = document.getElementById('repo-token').value.trim();
+            const msg = document.getElementById('status-msg');
+
+            if(!owner || !repo || !token) {
+                alert("Please enter Owner, Repo Name, and Token!");
+                return;
+            }
+
+            msg.innerText = "Loading data from GitHub...";
+            try {
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+                    headers: { "Authorization": `token ${token}` }
+                });
+                if(res.ok) {
+                    const fileData = await res.json();
+                    const jsonContent = JSON.parse(atob(fileData.content));
+                    currentData = jsonContent;
+                    populateForm();
+                    msg.className = "mt-6 text-center text-sm font-semibold text-emerald-400";
+                    msg.innerText = "Data loaded successfully from GitHub!";
+                } else {
+                    msg.className = "mt-6 text-center text-sm font-semibold text-amber-400";
+                    msg.innerText = "data.json not found in repo. Using default template. You can save to create it.";
+                    populateForm();
+                }
+            } catch(e) {
+                msg.className = "mt-6 text-center text-sm font-semibold text-rose-400";
+                msg.innerText = "Error: " + e.message;
+            }
+        }
+
+        async function saveToGitHub() {
+            const owner = document.getElementById('repo-owner').value.trim();
+            const repo = document.getElementById('repo-name').value.trim();
+            const token = document.getElementById('repo-token').value.trim();
+            const msg = document.getElementById('status-msg');
+
+            if(!owner || !repo || !token) {
+                alert("Please fill GitHub Owner, Repo Name, and Token!");
+                return;
+            }
+
+            // Collect General Fields
+            currentData.shop_name = document.getElementById('inp-shopname').value;
+            currentData.tagline = document.getElementById('inp-tagline').value;
+            currentData.hero_title = document.getElementById('inp-herotitle').value;
+            currentData.hero_desc = document.getElementById('inp-herodesc').value;
+            currentData.whatsapp = document.getElementById('inp-whatsapp').value;
+            currentData.phone = document.getElementById('inp-phone').value;
+            currentData.timing = document.getElementById('inp-timing').value;
+            currentData.address = document.getElementById('inp-address').value;
+
+            msg.className = "mt-6 text-center text-sm font-semibold text-amber-400";
+            msg.innerText = "Saving changes to GitHub repository...";
+
+            const path = "data.json";
             const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-            const payload = { shop_status: status, updated_at: new Date().toISOString() };
 
             try {
                 let sha = "";
                 const getRes = await fetch(url, { headers: { "Authorization": `token ${token}` } });
-                if (getRes.ok) {
-                    const fileData = await getRes.json();
-                    sha = fileData.sha;
+                if(getRes.ok) {
+                    const fileInfo = await getRes.json();
+                    sha = fileInfo.sha;
                 }
 
                 const putRes = await fetch(url, {
@@ -85,26 +331,27 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        message: "Update shop status via Admin Portal",
-                        content: btoa(JSON.stringify(payload, null, 2)),
+                        message: "Update website content via Admin Panel",
+                        content: btoa(unescape(encodeURIComponent(JSON.stringify(currentData, null, 2)))),
                         sha: sha ? sha : undefined
                     })
                 });
 
-                if (putRes.ok) {
-                    msg.classList.add('text-emerald-400');
-                    msg.innerText = "Success! Repository synced successfully.";
+                if(putRes.ok) {
+                    msg.className = "mt-6 text-center text-sm font-semibold text-emerald-400";
+                    msg.innerText = "Success! All changes saved and published to GitHub!";
                 } else {
                     const err = await putRes.json();
-                    throw new Error(err.message || "Authentication failed");
+                    throw new Error(err.message || "Failed to save");
                 }
-            } catch (error) {
-                msg.classList.add('text-rose-400');
-                msg.innerText = "Error: " + error.message;
-            } finally {
-                btn.disabled = false;
+            } catch(err) {
+                msg.className = "mt-6 text-center text-sm font-semibold text-rose-400";
+                msg.innerText = "Error: " + err.message;
             }
         }
+
+        // Initialize form with default values
+        populateForm();
     </script>
 </body>
 </html>
