@@ -6,178 +6,233 @@
     <title id="site-title">Digital Xerox & Online Services | Dharni</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="bg-slate-950 text-slate-100 selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+    <!-- Top Bar / Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-11 h-11 bg-amber-500 rounded-2xl flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">
+                <div class="w-12 h-12 bg-gradient-to-tr from-amber-500 to-yellow-300 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 text-2xl font-black">
                     <i class="fa-solid fa-print"></i>
                 </div>
                 <div>
-                    <span id="nav-shop-name" class="font-extrabold text-white text-lg tracking-tight">डिजिटल ज़ेरॉक्स सेंटर</span>
-                    <span class="text-xs text-amber-400 block font-semibold" id="nav-tagline">Fast & Reliable Services</span>
+                    <span id="nav-shop-name" class="text-lg font-bold tracking-wide block text-white leading-tight">डिजिटल ज़ेरॉक्स & ऑनलाइन</span>
+                    <span id="nav-tagline" class="text-xs text-amber-400 font-medium">Fast & Reliable Services</span>
                 </div>
             </div>
-            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
-                <a href="#services" class="hover:text-amber-400 transition">सेवाएं</a>
-                <a href="#notices" class="hover:text-amber-400 transition">नॉरिस बोर्ड</a>
+
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#services" class="hover:text-amber-400 transition">सेवाएं (Services)</a>
+                <a href="#features" class="hover:text-amber-400 transition">विशेषताएं</a>
                 <a href="#gallery" class="hover:text-amber-400 transition">गैलरी</a>
                 <a href="#contact" class="hover:text-amber-400 transition">संपर्क</a>
             </div>
-            <a id="whatsapp-btn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition">
-                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp करें
-            </a>
+
+            <div class="flex items-center space-x-3">
+                <span id="badge-status" class="hidden sm:flex items-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1.5 rounded-full font-semibold">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-ping"></span> Open Now
+                </span>
+                <a id="whatsapp-btn" href="https://wa.me/919876543210?text=Hello,%20mujhe%20document%20print%20karwana%20hai" target="_blank" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-green-600/20 flex items-center gap-2 transition transform hover:scale-105">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp करें
+                </a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="pt-36 pb-20 px-4 text-center relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-4xl mx-auto">
-            <span class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs px-4 py-1.5 rounded-full font-bold uppercase tracking-wider">
-                <i class="fa-solid fa-bolt mr-1"></i> धारणी की सबसे तेज डिजिटल दुकान
-            </span>
-            <h1 id="hero-title" class="text-4xl sm:text-6xl font-extrabold text-white mt-6 mb-6 leading-tight">
-                सभी प्रकार के सरकारी दस्तावेज़ और प्रिंटिंग तुरंत पाएं
-            </h1>
-            <p id="hero-desc" class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-10">
-                सातबारा, 8-अ, अर्जेंट पासपोर्ट फोटो, आधार कार्ड, और हाई-क्वालिटी कलर ज़ेरॉक्स बिना लाइन के।
-            </p>
+    <header class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div id="hero-badge" class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> धारणी की सबसे तेज डिजिटल सेवा दुकान
+                    </div>
+                    <h1 id="hero-title" class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                        सभी प्रकार के <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">सरकारी दस्तावेज़</span> और प्रिंटिंग अब तुरंत!
+                    </h1>
+                    <p id="hero-desc" class="text-slate-400 text-lg max-w-2xl font-normal leading-relaxed">
+                        सातबारा, 8-अ, अर्जेंट पासपोर्ट फोटो, आधार कार्ड प्रिंट, मोबाइल PDF प्रिंट, और हाई-क्वालिटी कलर ज़ेरॉक्स बिना किसी लाइन के मिनटों में पाएं।
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#services" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold px-8 py-4 rounded-xl shadow-xl shadow-amber-400/20 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check"></i> सभी सेवाएं देखें
+                        </a>
+                        <a id="phone-call-btn" href="tel:9876543210" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold px-8 py-4 rounded-xl transition flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-amber-400"></i> तुरंत कॉल करें
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5" id="features">
+                    <div class="glass-effect p-6 rounded-3xl shadow-2xl relative border border-slate-800">
+                        <div class="absolute -top-3 -right-3 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold text-xs px-4 py-1.5 rounded-full shadow-lg">
+                            🔥 Fast Service
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-white border-b border-slate-800 pb-3">दुकान की मुख्य विशेषताएं</h3>
+                        <ul id="features-list" class="space-y-4 text-sm text-slate-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400 text-lg"></i> सातबारा (7/12) एवं 8-अ तुरंत डिजिटल प्रिंट</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400 text-lg"></i> व्हाट्सएप पर PDF भेजकर तुरंत प्रिंट पाएं</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400 text-lg"></i> अर्जेंट पासपोर्ट साइज फोटो (5 मिनट में)</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400 text-lg"></i> आधार कार्ड, पैन कार्ड & ऑनलाइन फॉर्म</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Notice Board Section -->
-    <section id="notices" class="py-12 bg-amber-500/5 border-y border-amber-500/20 px-4">
-        <div class="max-w-5xl mx-auto">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="bg-amber-500 text-slate-950 px-3 py-1 rounded-lg font-bold text-xs uppercase flex items-center gap-1.5">
-                    <i class="fa-solid fa-bullhorn"></i> Notice Board
-                </div>
-                <h2 class="text-xl font-bold text-white">आवश्यक सूचनाएं</h2>
+    <!-- Services Grid Section -->
+    <section id="services" class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-3">What We Offer</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">हमारी लोकप्रिय सेवाएं</h3>
+                <p class="text-slate-400 mt-3">दुकान पर उपलब्ध सभी डिजिटल और प्रिंटिंग सेवाओं की पूरी सूची</p>
             </div>
-            <div id="notice-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamic Notices Loaded Here -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Services Grid -->
-    <section id="services" class="py-20 px-4 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">Our Services</h2>
-            <h3 class="text-3xl font-extrabold text-white">दुकान की मुख्य सेवाएं</h3>
-        </div>
-        <div id="services-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Dynamic Services Loaded Here -->
+            <div id="services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Services dynamically loaded here -->
+            </div>
         </div>
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-slate-900/50 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">Gallery</h2>
-                <h3 class="text-3xl font-extrabold text-white">दुकान एवं वर्क गैलरी</h3>
+    <section id="gallery" class="py-24 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-3">Our Workspace</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">दुकान एवं सेटअप गैलरी</h3>
+                <p class="text-slate-400 mt-3">हमारी आधुनिक प्रिंटिंग मशीनें और कार्यक्षेत्र की झलक</p>
             </div>
-            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <!-- Dynamic Photos Loaded Here -->
+
+            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Photos dynamically loaded here -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="bg-slate-950 border-t border-slate-900 py-16 px-4">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-slate-900 border-t border-slate-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
-                <h4 id="footer-shop-name" class="text-white font-bold text-lg mb-3">डिजिटल ज़ेरॉक्स सेंटर</h4>
-                <p id="footer-desc" class="text-slate-400 text-sm">आपकी सभी ऑनलाइन और प्रिंटिंग ज़रूरतों का भरोसेमंद ठिकाना।</p>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-amber-400 rounded-lg flex items-center justify-center text-slate-950 font-bold">
+                        <i class="fa-solid fa-print"></i>
+                    </div>
+                    <span id="footer-shop-name" class="text-lg font-bold text-white">डिजिटल ज़ेरॉक्स सेंटर</span>
+                </div>
+                <p id="footer-about" class="text-slate-400 text-sm leading-relaxed">हम आपके सभी प्रकार के सरकारी दस्तावेज़, ऑनलाइन फॉर्म और प्रिंटिंग आवश्यकताओं के लिए प्रतिबद्ध हैं।</p>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-3 text-sm uppercase">समय</h4>
-                <p id="footer-timing" class="text-slate-400 text-sm">सोमवार - शनिवार: सुबह 8:00 - रात 8:30</p>
+                <h4 class="text-white font-bold mb-4">दुकान का समय (Timing)</h4>
+                <ul class="text-slate-400 text-sm space-y-2">
+                    <li class="flex justify-between border-b border-slate-800 pb-2"><span>सोमवार - शनिवार:</span> <span id="timing-mon-sat" class="text-amber-400 font-semibold">सुबह 8:00 - रात 8:30</span></li>
+                    <li class="flex justify-between pb-2"><span>रविवार:</span> <span id="timing-sun" class="text-amber-400 font-semibold">सुबह 9:00 - दोपहर 2:00</span></li>
+                </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-3 text-sm uppercase">संपर्क</h4>
-                <p id="footer-address" class="text-slate-400 text-sm mb-1"><i class="fa-solid fa-location-dot text-amber-400 mr-2"></i> धारणी, महाराष्ट्र</p>
-                <p id="footer-phone" class="text-slate-400 text-sm"><i class="fa-solid fa-phone text-emerald-400 mr-2"></i> +91 9876543210</p>
+                <h4 class="text-white font-bold mb-4">संपर्क विवरण</h4>
+                <p id="footer-address" class="text-slate-400 text-sm mb-2"><i class="fa-solid fa-location-dot text-amber-400 mr-2"></i> मुख्य मार्ग, धारणी, जिला अमरावती, महाराष्ट्र</p>
+                <p id="footer-phone" class="text-slate-400 text-sm mb-2"><i class="fa-solid fa-phone text-emerald-400 mr-2"></i> +91 98765 43210</p>
+                <p id="footer-email" class="text-slate-400 text-sm"><i class="fa-solid fa-envelope text-blue-400 mr-2"></i> support@digitalxerox.in</p>
             </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 mt-12 pt-6 text-center text-xs text-slate-500">
+            © 2026 Digital Xerox & Online Services. All Rights Reserved.
         </div>
     </footer>
 
-    <!-- Script to Load Dynamic Data from data.json -->
+    <!-- Dynamic Script -->
     <script>
-        async function loadWebsiteData() {
+        async function fetchWebsiteData() {
             try {
                 const res = await fetch('data.json?t=' + Date.now());
                 if (!res.ok) return;
                 const data = await res.json();
 
-                // Basic Info
-                if(data.shop_name) document.getElementById('nav-shop-name').innerText = data.shop_name;
-                if(data.tagline) document.getElementById('nav-tagline').innerText = data.tagline;
-                if(data.hero_title) document.getElementById('hero-title').innerText = data.hero_title;
-                if(data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
-                if(data.whatsapp) document.getElementById('whatsapp-btn').href = `https://wa.me/${data.whatsapp}?text=Hello,%20mujhe%20print%20karwana%20hai`;
-                if(data.timing) document.getElementById('footer-timing').innerText = data.timing;
-                if(data.address) document.getElementById('footer-address').innerHTML = `<i class="fa-solid fa-location-dot text-amber-400 mr-2"></i> ${data.address}`;
-                if(data.phone) document.getElementById('footer-phone').innerHTML = `<i class="fa-solid fa-phone text-emerald-400 mr-2"></i> ${data.phone}`;
+                if (data.shop_name) {
+                    document.getElementById('nav-shop-name').innerText = data.shop_name;
+                    document.getElementById('footer-shop-name').innerText = data.shop_name;
+                }
+                if (data.tagline) document.getElementById('nav-tagline').innerText = data.tagline;
+                if (data.hero_title) document.getElementById('hero-title').innerHTML = data.hero_title;
+                if (data.hero_desc) document.getElementById('hero-desc').innerText = data.hero_desc;
+                if (data.hero_badge) document.getElementById('hero-badge').innerHTML = `<i class="fa-solid fa-bolt text-amber-400"></i> ${data.hero_badge}`;
+
+                if (data.whatsapp) {
+                    document.getElementById('whatsapp-btn').href = `https://wa.me/${data.whatsapp}?text=Hello,%20mujhe%20print%20karwana%20hai`;
+                }
+                if (data.phone) {
+                    document.getElementById('phone-call-btn').href = `tel:${data.phone}`;
+                    document.getElementById('footer-phone').innerHTML = `<i class="fa-solid fa-phone text-emerald-400 mr-2"></i> ${data.phone}`;
+                }
+                if (data.address) document.getElementById('footer-address').innerHTML = `<i class="fa-solid fa-location-dot text-amber-400 mr-2"></i> ${data.address}`;
+                if (data.email) document.getElementById('footer-email').innerHTML = `<i class="fa-solid fa-envelope text-blue-400 mr-2"></i> ${data.email}`;
+                if (data.about) document.getElementById('footer-about').innerText = data.about;
+                if (data.timing_monsat) document.getElementById('timing-mon-sat').innerText = data.timing_monsat;
+                if (data.timing_sun) document.getElementById('timing-sun').innerText = data.timing_sun;
+
+                // Shop Status
+                if (data.status === "Closed") {
+                    document.getElementById('badge-status').className = "hidden sm:flex items-center bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs px-3 py-1.5 rounded-full font-semibold";
+                    document.getElementById('badge-status').innerHTML = `<span class="w-2 h-2 bg-rose-400 rounded-full mr-2"></span> Closed`;
+                }
 
                 // Services
-                if(data.services && data.services.length > 0) {
+                if (data.services && data.services.length > 0) {
                     let sHtml = '';
                     data.services.forEach(s => {
                         sHtml += `
-                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
-                            <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
+                        <div class="glass-effect p-8 rounded-2xl hover:border-amber-500/50 transition duration-300 group">
+                            <div class="w-14 h-14 ${s.bg || 'bg-amber-500/10'} ${s.color || 'text-amber-400'} rounded-2xl flex items-center justify-center text-2xl font-bold mb-6 group-hover:scale-110 transition">
                                 <i class="${s.icon || 'fa-solid fa-file'}"></i>
                             </div>
-                            <h4 class="text-xl font-bold text-white mb-2">${s.title}</h4>
-                            <p class="text-slate-400 text-sm mb-4">${s.desc}</p>
-                            <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-lg font-medium">${s.badge || 'उपलब्ध'}</span>
+                            <h4 class="text-xl font-bold mb-3 text-white">${s.title}</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">${s.desc}</p>
+                            <span class="inline-block bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-lg font-medium">${s.badge}</span>
                         </div>`;
                     });
                     document.getElementById('services-container').innerHTML = sHtml;
                 }
 
-                // Notices
-                if(data.notices && data.notices.length > 0) {
-                    let nHtml = '';
-                    data.notices.forEach(n => {
-                        nHtml += `
-                        <div class="bg-slate-900 border border-slate-800/80 p-4 rounded-2xl flex items-start gap-3">
-                            <i class="fa-solid fa-circle-exclamation text-amber-400 mt-1"></i>
-                            <div>
-                                <h5 class="font-bold text-white text-sm">${n.title}</h5>
-                                <p class="text-slate-400 text-xs mt-1">${n.desc}</p>
-                            </div>
-                        </div>`;
+                // Features
+                if (data.features && data.features.length > 0) {
+                    let fHtml = '';
+                    data.features.forEach(f => {
+                        fHtml += `<li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-amber-400 text-lg"></i> ${f}</li>`;
                     });
-                    document.getElementById('notice-container').innerHTML = nHtml;
+                    document.getElementById('features-list').innerHTML = fHtml;
                 }
 
-                // Gallery Photos
-                if(data.gallery && data.gallery.length > 0) {
+                // Gallery
+                if (data.gallery && data.gallery.length > 0) {
                     let gHtml = '';
-                    data.gallery.forEach(imgUrl => {
+                    data.gallery.forEach(img => {
                         gHtml += `
-                        <div class="overflow-hidden rounded-3xl border border-slate-800 group h-64">
-                            <img src="${imgUrl}" alt="Shop Photo" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="overflow-hidden rounded-2xl border border-slate-800 group">
+                            <img src="${img}" alt="Shop Gallery" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
                         </div>`;
                     });
                     document.getElementById('gallery-container').innerHTML = gHtml;
                 }
-            } catch(e) { console.log("Data loading error:", e); }
+            } catch (err) {
+                console.log("Using default fallback content");
+            }
         }
-        loadWebsiteData();
+        fetchWebsiteData();
     </script>
 </body>
 </html>
